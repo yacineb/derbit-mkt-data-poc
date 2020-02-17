@@ -6,8 +6,10 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - "mongodb"
+      - mongodb
+    network_mode: host
   mongodb:
     image: 'bitnami/mongodb:4.0'
     ports:
       - "27017:27017"
+    network_mode: host

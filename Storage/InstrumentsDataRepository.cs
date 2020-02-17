@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -20,6 +21,7 @@ namespace deribit_mktdata.Storage
 
         public async Task Add(InstrumentData data)
         {
+            Console.WriteLine("Inserting instrument {0} data", data.Name);
             await _instruments.InsertOneAsync(data);
         }
 

@@ -2,7 +2,11 @@
 
 ## Ho to get the service up and running
 
-docker-compose up -d
+Please run the command above
+
+`docker-compose up -d` this needs docker and docker compose to be installed
+
+Another approach is to install mongo db locally and run the app from visual studio
 
 ## REST Api
 
@@ -12,7 +16,10 @@ curl http://localhost:5000/api/instrumentsdata?name=BTC-21FEB20-9500-C
 
 to get quotes in a date interval :
 
-curl http://localhost:5000/api/instrumentsdata?from=1581812821793&to=1581812821799&name=BTC-21FEB20-9500-C
+curl http://localhost:5000/api/instrumentsdata?name=BTC-21FEB20-9500-C&from=1581921089522
+
+'from' default value is Linux Epoch timestamp
+'to' default value is current timestamp (at the time query is done)
 
 **The result is a json array of {t,p} object ordered by t. t stands for timestamp and p for prices**.
 
@@ -36,7 +43,7 @@ storing time-series.
 
 ## "Roadmap" What is would have done if i had more time
 
-- Handle properly the Deribit Api error codes.
+- **Handle the Deribit Api error codes properly**.
 - Make data retrieval interval remotely configurable using /config endpoint.
 - Make rate limitation dynamically adjustable. According to this documentation https://www.deribit.com/pages/information/rate-limits , quotas are queryable by api.
 They could be polled on a regular basis in order to upgrade rate limitation
