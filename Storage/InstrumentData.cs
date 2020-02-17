@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace WebApi.Storage
+namespace deribit_mktdata.Storage
 {
     public class InstrumentData
     {

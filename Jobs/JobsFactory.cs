@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using deribit_mktdata.DeribitApiClient;
 using deribit_mktdata.Storage;
-using WebApi.Storage;
 
 namespace deribit_mktdata.Jobs
 {

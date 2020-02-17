@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using deribit_mktdata.DeribitApiClient;
 using deribit_mktdata.Storage;
 using Newtonsoft.Json.Linq;
-using WebApi.Storage;
 
 namespace deribit_mktdata.Jobs
 {
