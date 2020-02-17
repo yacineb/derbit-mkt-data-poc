@@ -8,7 +8,7 @@ Please run the command above
 
 Another approach is to install mongo db locally and run the app from visual studio
 
-> TEST service is not reliable through ws api. It worked perfectly for a bit of time and then stopped giving me Instruments Prices..
+> TEST service is not reliable through ws api. It worked perfectly for a bit of time and then stopped giving me Instruments Prices.. It's very frutrating..
 
 ## REST Api
 
@@ -46,6 +46,7 @@ storing time-series.
 ## "Roadmap" What is would have done if i had more time
 
 - **Handle the Deribit Api error codes properly**.
+- Add Unit testing/integration testing
 - Make data retrieval interval remotely configurable using /config endpoint.
 - Make rate limitation dynamically adjustable. According to this documentation https://www.deribit.com/pages/information/rate-limits , quotas are queryable by api.
 They could be polled on a regular basis in order to upgrade rate limitation
