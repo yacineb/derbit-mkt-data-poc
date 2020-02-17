@@ -36,16 +36,13 @@ storing time-series.
 
 ## "Roadmap" What is would have done if i had more time
 
-**business logic**
 - Handle properly the Deribit Api error codes.
 - Make data retrieval interval remotely configurable using /config endpoint.
-- Make rate limitation dynamically adjustable. Accoring to this documentation https://www.deribit.com/pages/information/rate-limits , quotas are queryable by api.
+- Make rate limitation dynamically adjustable. According to this documentation https://www.deribit.com/pages/information/rate-limits , quotas are queryable by api.
 They could be polled on a regular basis in order to upgrade rate limitation
 - Maybe exposing a Bulk get for instruments quotes could be useful..
-- The rate limiter i've implemented is for POC purpose. for production scenario we may call Deribit api from many services instances. So we need a distributed rate Limiter.
+- **The rate limiter i've implemented is for POC purpose**. for production scenario we may call Deribit api from many services instances. So we need a distributed rate Limiter.
 Redis is commonly used to implement rate limiters (https://redislabs.com/redis-best-practices/basic-rate-limiting/)
-
-**other**
 - Add logging : Serilog is a great library for this purpose..
 - Secure the REST api using Authentication: exposed data are sensitive (especially the one under /private  route)
 - user/password for database access.

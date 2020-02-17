@@ -1,6 +1,12 @@
 version: '2'
 
 services:
+  xbtodemo:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - "mongodb"
   mongodb:
     image: 'bitnami/mongodb:4.0'
     ports:
