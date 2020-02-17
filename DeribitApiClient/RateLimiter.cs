@@ -25,9 +25,6 @@ namespace deribit_mktdata.DeribitApiClient
         public TimeSpan Interval { get; }
         public int MaxRequests { get; }
 
-        /**
-         * 
-         */
         public async Task Await(CancellationToken ct)
         {  
             // trim queue in order to keep the same maximum "time window"
@@ -48,7 +45,6 @@ namespace deribit_mktdata.DeribitApiClient
                     tsc.SetResult(true);
                     break;
                 }
-                Console.WriteLine("waiting ..");
                 await Task.Delay(_spinningIntervalMs, ct);
             } while (true);
 

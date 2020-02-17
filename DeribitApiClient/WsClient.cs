@@ -14,6 +14,7 @@ namespace deribit_mktdata.DeribitApiClient
     {
         private readonly ClientWebSocket _ws;
         private readonly WsClientOptions _opt;
+        private readonly RateLimiter _rateLimiter;
         
         /**
          * A classic event handler is fine for this demo case. HOWEVER :
@@ -34,7 +35,7 @@ namespace deribit_mktdata.DeribitApiClient
             _ws = new ClientWebSocket();
             _opt = opt;
 
-            // Create Time constraint: max five times by second
+            _rateLimiter = new RateLimiter(opt.RequestsLimitationTimeWindow, opt.RequestsLimitationNumber);
         }
 
         public async Task Connect(CancellationToken ct)
@@ -48,6 +49,7 @@ namespace deribit_mktdata.DeribitApiClient
          */
         public async Task Request(string req, CancellationToken ct)
         {
+            await _rateLimiter.Await(ct);
             await _ws.SendAsync(Encoding.UTF8.GetBytes(req), WebSocketMessageType.Text, true, ct);
         }
 
