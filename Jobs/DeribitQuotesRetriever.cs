@@ -70,9 +70,9 @@ namespace deribit_mktdata.Jobs
          * Runs the data retrieval with a given execution <paramref name="interval"/>.
          *  This background job queries Derebit Api and persists data to the storage
          */
-        public Task Run(TimeSpan interval, CancellationToken ct)
+        public void Run(TimeSpan interval, CancellationToken ct)
         {
-            return Task.Run(async () =>
+            Task.Run(async () =>
             {
                 do
                 {

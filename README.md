@@ -8,6 +8,8 @@ Please run the command above
 
 Another approach is to install mongo db locally and run the app from visual studio
 
+> TEST service is not reliable through ws api. It worked perfectly for a bit of time and then stopped giving me Instruments Prices..
+
 ## REST Api
 
 The command above gets all of the quotes history for an instrument
@@ -50,6 +52,7 @@ They could be polled on a regular basis in order to upgrade rate limitation
 - Maybe exposing a Bulk get for instruments quotes could be useful..
 - **The rate limiter i've implemented is for POC purpose**. for production scenario we may call Deribit api from many services instances. So we need a distributed rate Limiter.
 Redis is commonly used to implement rate limiters (https://redislabs.com/redis-best-practices/basic-rate-limiting/)
+- Graceful stop : i've my best to propagate cancellation token ,but there's still work to do..
 - Add logging : Serilog is a great library for this purpose..
 - Secure the REST api using Authentication: exposed data are sensitive (especially the one under /private  route)
 - user/password for database access.

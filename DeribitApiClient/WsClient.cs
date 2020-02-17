@@ -10,7 +10,7 @@ namespace deribit_mktdata.DeribitApiClient
     /**
      * A wrapper around ClientWebSocket native .net class
      */
-    public class WsClient : IDisposable
+    public class WsClient
     {
         private readonly ClientWebSocket _ws;
         private readonly WsClientOptions _opt;
@@ -41,7 +41,7 @@ namespace deribit_mktdata.DeribitApiClient
         public async Task Connect(CancellationToken ct)
         {
             await _ws.ConnectAsync(new Uri(this._opt.Url), ct);
-            Task.Run(async () => await ListenToIncomingResponses(ct), ct);
+            ListenToIncomingResponses(ct);
         }
 
         /**
@@ -53,37 +53,40 @@ namespace deribit_mktdata.DeribitApiClient
             await _ws.SendAsync(Encoding.UTF8.GetBytes(req), WebSocketMessageType.Text, true, ct);
         }
 
-        private async Task ListenToIncomingResponses(CancellationToken ct)
+        private void ListenToIncomingResponses(CancellationToken ct)
         {
-            do
+            Task.Run(async () =>
             {
-                var buffer = new ArraySegment<byte>(new byte[2048]);
-                using (var ms = new MemoryStream())
+                do
                 {
-                    WebSocketReceiveResult result;
-
-                    do
+                    var buffer = new ArraySegment<byte>(new byte[2048]);
+                    using (var ms = new MemoryStream())
                     {
-                        result = await _ws.ReceiveAsync(buffer, ct);
-                        ms.Write(buffer.Array, buffer.Offset, result.Count);
-                    } while (!result.EndOfMessage);
+                        WebSocketReceiveResult result;
+
+                        do
+                        {
+                            result = await _ws.ReceiveAsync(buffer, ct);
+                            ms.Write(buffer.Array, buffer.Offset, result.Count);
+                        } while (!result.EndOfMessage);
 
 
-                    if (result.MessageType == WebSocketMessageType.Close || ct.IsCancellationRequested)
-                        break;
+                        if (result.MessageType == WebSocketMessageType.Close || ct.IsCancellationRequested)
+                            break;
 
-                    ms.Seek(0, SeekOrigin.Begin);
-                    using (var reader = new StreamReader(ms, Encoding.UTF8))
-                    {
-                        var response = await reader.ReadToEndAsync();
-                        await HandleIncomingMessage(response);
+                        ms.Seek(0, SeekOrigin.Begin);
+                        using (var reader = new StreamReader(ms, Encoding.UTF8))
+                        {
+                            var response = await reader.ReadToEndAsync();
+                            await HandleIncomingMessage(response);
+                        }
                     }
-                }
 
-            } while (true);
+                } while (true);
+            }, ct);
         }
         
-        public void Dispose()
+        public void Close()
         {
             _ws.Dispose();
         }
